@@ -4,8 +4,9 @@ import Button from 'react-bootstrap/Button';
 
 export default class Thing extends React.Component {
 
-    state = {
-        done: false
+    constructor(props){
+        super(props);
+        this.state = {done: props.done};
     }
 
     finish = () => {
