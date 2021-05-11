@@ -1,29 +1,61 @@
-import React from 'react';
-//import './Thing.css'
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Draggable from "react-draggable";
 
 export default class Thing extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			done: props.done,
+		};
+	}
 
-    constructor(props){
-        super(props);
-        this.state = {done: props.done};
-    }
+	finish = async () => {
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			// query: { thingName: "Workout", dayIndex: "3", doneVal: "done" },
+			body: { title: "" },
+		};
 
-    finish = () => {
-        this.setState({
-            done: !this.state.done
-        })
-    }
+		const doneVal = !this.state.done ? "done" : "not";
 
-    render() {
-        const bCol = this.state.done ? "m-1 shadow-none btn-secondary" : "m-1 shadow-none btn-primary";
+		await fetch(
+			`https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-ebofj/service/service-HTTP/incoming_webhook/setDone?thingName=${this.props.name}&dayIndex=${this.props.dayNum}&doneVal=${doneVal}`,
+			requestOptions
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				this.setState({
+					done: !this.state.done,
+				});
+				console.log(data);
+			})
+			.catch(console.log);
+	};
 
-        return (
-            <div> 
-                <Button className={bCol} type="submit" onClick = {this.finish} aria-disabled="true"> 
-                    {this.state.done ? <strike> {this.props.name} </strike> : this.props.name} 
-                </Button>
-            </div>
-        )
-    }
+	//https://webhooks.mongodb-realm.com/api/client/v2.0/app/todo-ebofj/service/service-HTTP/incoming_webhook/setDone?thingName=Poker&dayIndex=4&doneVal=null
+
+	render() {
+		const bCol = this.state.done
+			? "m-1 shadow-none btn-secondary"
+			: "m-1 shadow-none btn-primary";
+
+		return (
+			<Draggable>
+				<Button
+					className={bCol}
+					type="submit"
+					onClick={this.finish}
+					aria-disabled="true"
+				>
+					{this.state.done ? (
+						<strike> {this.props.name} </strike>
+					) : (
+						this.props.name
+					)}
+				</Button>
+			</Draggable>
+		);
+	}
 }
