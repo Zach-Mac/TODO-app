@@ -1,0 +1,37 @@
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Draggable from "react-draggable";
+
+export default function ThingTemplate(props) {
+	const nodeRef = React.useRef(null);
+
+	const handleStop = () => {
+		console.log(props.x);
+	};
+
+	return (
+		<Draggable handleStop={handleStop}>
+			<Button
+				className="m-1 shadow-none btn-info"
+				type="submit"
+				aria-disabled="true"
+				nodeRef={nodeRef}
+			>
+				{props.name}
+			</Button>
+		</Draggable>
+	);
+}
+
+{
+	/* <Draggable nodeRef={this.nodeRef} onStop={this.handleStop} x="10">
+    <Button
+        className="m-1 shadow-none btn-info"
+        type="submit"
+        aria-disabled="true"
+        nodeRef={this.nodeRef}
+    >
+        <div nodeRef={this.nodeRef}>{this.props.name}</div>
+    </Button>
+</Draggable> */
+}

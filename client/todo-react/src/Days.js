@@ -2,6 +2,8 @@ import React from "react";
 import Day from "./Day";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/esm/Container";
+import daysOfWeek from "./consts";
 
 export default class Days extends React.Component {
 	constructor(props) {
@@ -13,20 +15,10 @@ export default class Days extends React.Component {
 		};
 	}
 
-	daysOfWeek = [
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-		"Sunday",
-	];
-
 	render() {
 		return (
 			<>
-				{this.daysOfWeek.map((day, i) => (
+				{daysOfWeek.map((day, i) => (
 					<Col>
 						<Day
 							day={day}

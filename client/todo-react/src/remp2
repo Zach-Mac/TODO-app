@@ -1,0 +1,19 @@
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Draggable from "react-draggable";
+
+export default class ThingTemplate extends React.Component {
+	render() {
+		return (
+			<Draggable>
+				<Button
+					className="m-1 shadow-none btn-info"
+					type="submit"
+					aria-disabled="true"
+				>
+					{this.props.name}
+				</Button>
+			</Draggable>
+		);
+	}
+}
